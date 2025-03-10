@@ -1,0 +1,17 @@
+AreaEnsamblaje/GestionComponentes.class
+AreaVentas/VentaRealizada.class
+AreaEnsamblaje/Molde.class
+Admin/EliminarUsuarios.class
+AreaVentas/GenerarFacturaPDF.class
+AreaEnsamblaje/UnionMolde/Molde.class
+Admin/CrearUsuario.class
+AreaEnsamblaje/EnsamblajeConMolde.class
+com/mycompany/proyecto1_ipc2/resources/JakartaEE10Resource.class
+Admin/ConectarUsuarios.class
+AreaVentas/AgregarComprador.class
+com/mycompany/proyecto1_ipc2/JakartaRestConfiguration.class
+AreaEnsamblaje/AlmacenComputadoras.class
+AreaEnsamblaje/Componentes.class
+AreaEnsamblaje/ComputadoraEnsamblada.class
+Admin/AdminUser.class
+AreaVentas/Comprador.class

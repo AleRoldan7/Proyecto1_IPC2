@@ -1,0 +1,109 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 21 feb 2025, 2:52:22
+    Author     : alejandro
+*/
+
+/* Reset de márgenes y paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo global */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Título */
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Estilo del formulario */
+form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo de las etiquetas y campos de entrada */
+label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: block;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Estilo de los botones */
+button {
+    background-color: #4CAF50; /* Verde */
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Estilo para el botón de regreso */
+form button:last-child {
+    background-color: #f44336; /* Rojo para "Regresar" */
+    width: auto;
+    margin-top: 10px;
+}
+
+form button:last-child:hover {
+    background-color: #da190b;
+}
+
+/* Estilos para el mensaje de éxito/error */
+p {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+p[style*="color:green"] {
+    color: green;
+}
+
+p[style*="color:red"] {
+    color: red;
+}
+

@@ -1,0 +1,110 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 21 feb 2025, 2:39:23
+    Author     : alejandro
+*/
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+
+form {
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #4CAF50; 
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+
+button:focus {
+    outline: none;
+}
+
+
+button:last-child {
+    background-color: #f44336; 
+}
+
+button:last-child:hover {
+    background-color: #da190b;
+}
+
+button:nth-last-child(2) {
+    background-color: #2196F3; 
+}
+
+button:nth-last-child(2):hover {
+    background-color: #0b78c6;
+}
+
+button:nth-last-child(3) {
+    background-color: #ff9800; 
+}
+
+button:nth-last-child(3):hover {
+    background-color: #e68900;
+}
+
+button:nth-last-child(4) {
+    background-color: #009688; 
+}
+
+button:nth-last-child(4):hover {
+    background-color: #00796b;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+}
+
+form button {
+    width: 100%;
+}
+
+.container {
+    text-align: center;
+}
