@@ -10,6 +10,7 @@ package AreaVentas;
  */
 public class Comprador {
    
+    private int idComprador;
     private String nombreComprador;
     private String nit;
     private String direccion;
@@ -62,6 +63,14 @@ public class Comprador {
 
     public void setEmailComprador(String emailComprador) {
         this.emailComprador = emailComprador;
+    }
+
+    public int getIdComprador() {
+        return idComprador;
+    }
+
+    public void setIdComprador(int idComprador) {
+        this.idComprador = idComprador;
     }
     
     

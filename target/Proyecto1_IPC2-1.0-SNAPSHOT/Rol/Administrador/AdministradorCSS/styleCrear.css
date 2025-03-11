@@ -1,78 +1,102 @@
 /*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
-*/
-/* 
     Created on : 21 feb 2025, 0:28:08
     Author     : alejandro
 */
 
- body {
+body {
     font-family: Arial, sans-serif;
-    background-color: #f4f7fc;
+    background-color: #f9e8d8; /* Warm peach background for a friendly feel */
+    background-image: linear-gradient(135deg, #f9e8d8 0%, #e8f0f5 100%); /* Subtle gradient */
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-}
-        
-h1 {
-    color: #333;
-    font-size: 24px;
-    text-align: center;
-    margin-bottom: 20px;
+    min-height: 100vh;
 }
 
 .form-container {
     background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
+    margin: 20px;
 }
 
-        .form-container label {
-            font-size: 14px;
-            margin-bottom: 8px;
-            display: block;
-            color: #555;
-        }
+h1 {
+    color: #e67e22; /* Warm orange for header */
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 25px;
+}
 
-        .form-container input[type="text"],
-        .form-container input[type="password"],
-        .form-container select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-            color: #333;
-        }
+.form-container label {
+    font-size: 14px;
+    margin-bottom: 8px;
+    display: block;
+    color: #7f8c8d; /* Soft gray for labels */
+}
 
-        .form-container input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-            transition: background-color 0.3s ease;
-        }
+.form-container input[type="text"],
+.form-container input[type="password"],
+.form-container select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #d4d8d9; /* Light gray border */
+    border-radius: 6px;
+    font-size: 14px;
+    color: #34495e;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.form-container input[type="text"]:focus,
+.form-container input[type="password"]:focus,
+.form-container select:focus {
+    border-color: #e67e22; /* Orange highlight on focus */
+    outline: none;
+}
+
+.form-container input[type="submit"] {
+    background-color: #3498db; /* Blue for primary action */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+    margin-bottom: 25px; /* Increased separation between buttons */
+}
 
 .form-container input[type="submit"]:hover {
-    background-color: #45a049;
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+.form-container button {
+    background-color: #e67e22; /* Warm orange for secondary button */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+    background-color: #d35400; /* Darker orange on hover */
 }
 
 .message {
     font-size: 14px;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .message p {
@@ -82,11 +106,23 @@ h1 {
 }
 
 .message .success {
-    background-color: #d4edda;
-    color: #155724;
+    background-color: #e8f5e9; /* Soft green for success */
+    color: #2e7d32; /* Dark green text */
 }
 
 .message .error {
-    background-color: #f8d7da;
-    color: #721c24;
+    background-color: #fce4ec; /* Soft pink for error */
+    color: #c2185b; /* Deep pink text */
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .form-container {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 20px;
+    }
 }

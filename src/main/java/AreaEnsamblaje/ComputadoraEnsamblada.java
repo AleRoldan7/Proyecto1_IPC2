@@ -29,7 +29,6 @@ public class ComputadoraEnsamblada extends Componentes {
             ConectarUsuarios conn = new ConectarUsuarios();
             conexion = conn.conectar();
 
-            // Insertamos la computadora con el precio calculado
             String sql = "INSERT INTO computadora (nombreComputadora, precioTotal) VALUES (?, ?)";
             ps = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, nombreComputadora);

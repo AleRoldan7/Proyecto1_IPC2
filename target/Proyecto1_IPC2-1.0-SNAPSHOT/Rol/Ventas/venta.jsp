@@ -39,7 +39,7 @@
                 </form>
                 
                 
-                <form action="cantidadComponentes.jsp" method="get">
+                <form action="facturaGenerada.jsp" method="get">
                     <button>Consultar Ventas Del Día</button>
                 </form>
                 

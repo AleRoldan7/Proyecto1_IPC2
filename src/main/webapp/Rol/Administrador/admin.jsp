@@ -27,11 +27,17 @@
                 <button type="submit">Crear Usuario</button>
             </form>
             
-            <button>Asignar rol</button>
-            <button>Cambiar rol</button>
+            <form action="cambiarRol.jsp" method="get">
+                <button>Cambiar rol</button>
+            </form>
+            
             
             <form action="../../Frontend/index.jsp" method="get">
-                <button>inicio</button>
+                <button>Inicio</button>
+            </form>
+            
+            <form action="cargarArchivos.jsp" method="get">
+                <button>Cargar Archivo</button>
             </form>
             
             

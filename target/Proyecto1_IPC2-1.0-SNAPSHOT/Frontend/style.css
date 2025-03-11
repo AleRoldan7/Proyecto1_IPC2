@@ -1,16 +1,11 @@
 /*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
-*/
-/* 
     Created on : 14 feb 2025, 1:27:19
     Author     : alejandro
 */
 
-
 /* Estilo general para el fondo y el cuerpo */
 body {
-    background-color: #f0f8ff; /* Un color suave como el azul claro */
+    background-color: #e1f5fe; /* Azul suave */
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -34,7 +29,7 @@ body {
 
 /* Estilo para el encabezado */
 h1 {
-    color: #333;
+    color: #3f51b5; /* Azul oscuro para el título */
     margin-bottom: 20px;
 }
 
@@ -60,7 +55,7 @@ select {
 
 /* Estilo para el botón de envío */
 input[type="submit"] {
-    background-color: #4CAF50; /* Un verde suave */
+    background-color: #2196F3; /* Azul, o el color que se esté utilizando en las otras interfaces */
     color: white;
     border: none;
     padding: 12px 20px;
@@ -71,7 +66,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #45a049; /* Un tono verde más oscuro cuando se pasa el ratón */
+    background-color: #1976D2; /* Tono más oscuro para el hover */
 }
 
 /* Estilo para los márgenes de la página */
@@ -80,11 +75,25 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f0f8ff;
+    background-color: #e1f5fe; /* Azul suave */
     margin: 0;
 }
 
 /* Añadir un margen al contenedor */
 #contenedor {
     margin: 20px;
+}
+
+/* Estilo para el mensaje de error o éxito */
+.mensaje {
+    color: #d32f2f; /* Rojo para mensajes de error */
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* Estilo para mensajes de éxito */
+.mensaje-success {
+    color: #388e3c; /* Verde para mensajes de éxito */
+    font-weight: bold;
+    margin-top: 20px;
 }

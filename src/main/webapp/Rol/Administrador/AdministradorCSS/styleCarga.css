@@ -1,0 +1,105 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 11 mar 2025, 3:41:47
+    Author     : alejandro
+*/
+
+/* Definición de colores */
+:root {
+    --color-principal: #3498db; /* Color principal (azul) */
+    --color-secundario: #ffffff; /* Blanco */
+    --color-terciario: #f0f0f0; /* Gris claro */
+    --color-boton: #3498db; /* Botón azul */
+    --color-boton-hover: #2980b9; /* Hover del botón */
+    --color-borde: #d4d8d9; /* Borde de los campos */
+    --color-fondo: #f9e8d8; /* Fondo de la página */
+    --color-hover: #e0f7fa; /* Hover de las filas de la tabla */
+}
+
+/* Formulario de carga de archivo */
+.formulario-carga-archivo {
+    background-color: var(--color-secundario);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    margin: 20px;
+    overflow-x: auto;
+}
+
+/* Título del formulario */
+.formulario-carga-archivo h2 {
+    color: var(--color-principal);
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* Estilos para las etiquetas de los campos */
+.formulario-carga-archivo label {
+    display: block;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+/* Estilos para los campos de entrada */
+.formulario-carga-archivo input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--color-borde);
+    border-radius: 6px;
+    background-color: var(--color-terciario);
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Estilos para el botón */
+.formulario-carga-archivo button {
+    background-color: var(--color-boton);
+    color: var(--color-secundario);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+/* Cambio de color cuando el botón es hover */
+.formulario-carga-archivo button:hover {
+    background-color: var(--color-boton-hover);
+}
+
+/* Mensajes de error o éxito */
+.mensaje-error, .mensaje-exito {
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.mensaje-error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.mensaje-exito {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* Estilo para los campos con errores */
+.input-error {
+    border: 1px solid #e74c3c;
+    background-color: #f8d7da;
+}
+

@@ -7,12 +7,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : alejandro
 */
 
-
 #contenedor-admin {
-    background-color: #f8f9fa;
-    padding: 20px;
+    background-color: white; /* Fondo blanco */
+    padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra más suave */
     margin: 50px auto;
     width: 80%;
     max-width: 1200px;
@@ -20,22 +19,23 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 h1, h2 {
     text-align: center;
-    color: #333;
+    color: #e67e22; /* Naranja cálido para los títulos */
 }
 
 button {
-    background-color: #007bff;
+    background-color: #3498db; /* Azul para los botones */
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 20px; /* Más padding para mejor tacto */
     margin: 10px;
-    border-radius: 5px;
+    border-radius: 6px; /* Bordes más redondeados */
     cursor: pointer;
-    display: inline-block; /* Asegura que los botones estén en la misma línea */
+    display: inline-block;
+    transition: background-color 0.3s ease; /* Transición suave */
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #2980b9; /* Azul más oscuro al pasar el mouse */
 }
 
 #form-admin {
@@ -46,13 +46,13 @@ button:hover {
 }
 
 #contenedor-admin button {
-    display: inline-block; /* Asegura que todos los botones estén en la misma línea */
-    margin-right: 10px; /* Espaciado entre los botones */
+    display: inline-block;
+    margin-right: 10px;
 }
 
 form {
-    display: inline-block; /* Asegura que el formulario de creación de usuario esté en línea */
-    margin: 0; /* Elimina márgenes por defecto */
+    display: inline-block;
+    margin: 0;
 }
 
 table {
@@ -64,14 +64,61 @@ table {
 th, td {
     padding: 10px;
     text-align: center;
-    border: 1px solid #ddd;
+    border: 1px solid #d4d8d9; /* Borde gris claro */
 }
 
 th {
-    background-color: #007bff;
+    background-color: #3498db; /* Azul para el encabezado de la tabla */
     color: white;
 }
 
 td {
-    background-color: #f9f9f9;
+    background-color: #f9f9f9; /* Fondo gris claro para las celdas */
+}
+
+/* Estilos adicionales para mejorar la apariencia */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9e8d8; /* Fondo cálido */
+    background-image: linear-gradient(135deg, #f9e8d8 0%, #e8f0f5 100%); /* Gradiente suave */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.message {
+    font-size: 14px;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.message p {
+    padding: 10px;
+    border-radius: 4px;
+    margin: 0;
+}
+
+.message .success {
+    background-color: #e8f5e9; /* Verde suave para mensajes de éxito */
+    color: #2e7d32; /* Texto verde oscuro */
+}
+
+.message .error {
+    background-color: #fce4ec; /* Rosa suave para mensajes de error */
+    color: #c2185b; /* Texto rosa oscuro */
+}
+
+/* Ajustes responsivos */
+@media (max-width: 480px) {
+    #contenedor-admin {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    h1, h2 {
+        font-size: 20px; /* Tamaño de fuente más pequeño en móviles */
+    }
 }

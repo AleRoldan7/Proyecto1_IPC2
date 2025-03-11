@@ -13,10 +13,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Registrar Comprador</title>
-    <!-- Incluir Bootstrap desde CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Personalización del formulario */
         .form-container {
             max-width: 600px;
             margin: 0 auto;
@@ -33,22 +31,17 @@
             <h2>Registrar Comprador Nuevo</h2>
             
             <% 
-                // Si el formulario ha sido enviado
                 if ("POST".equalsIgnoreCase(request.getMethod())) {
-                    // Obtener los datos del formulario
                     String nombreComprador = request.getParameter("nombreComprador");
                     String nit = request.getParameter("nit");
                     String direccion = request.getParameter("direccion");
                     String celularComprador = request.getParameter("celularComprador");
                     String emailComprador = request.getParameter("emailComprador");
                     
-                    // Crear una instancia de AgregarComprador
                     AgregarComprador nuevoComprador = new AgregarComprador(nombreComprador, nit, direccion, celularComprador, emailComprador);
                     
-                    // Intentar agregar al comprador a la base de datos
                     boolean registrado = nuevoComprador.agregarComprador();
                     
-                    // Mostrar mensaje de éxito o error
                     if (registrado) {
                         out.println("<div class='alert alert-success'>Comprador registrado con éxito.</div>");
                     } else {
