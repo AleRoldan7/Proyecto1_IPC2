@@ -13,8 +13,9 @@ Admin/ConectarUsuarios.class
 AreaVentas/AgregarComprador.class
 com/mycompany/proyecto1_ipc2/JakartaRestConfiguration.class
 AreaEnsamblaje/AlmacenComputadoras.class
+AreaVentas/RegistrarVenta.class
 AreaEnsamblaje/Componentes.class
-AreaVentas/RegistrarVentaServlet.class
 AreaEnsamblaje/ComputadoraEnsamblada.class
 Admin/AdminUser.class
 AreaVentas/Comprador.class
+AreaVentas/MostrarUsuarioServlet.class

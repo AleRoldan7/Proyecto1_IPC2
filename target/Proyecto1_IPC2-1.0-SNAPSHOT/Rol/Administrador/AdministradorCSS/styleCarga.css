@@ -20,7 +20,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 /* Formulario de carga de archivo */
-.formulario-carga-archivo {
+.form-container {
     background-color: var(--color-secundario);
     padding: 25px;
     border-radius: 10px;
@@ -32,7 +32,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 /* Título del formulario */
-.formulario-carga-archivo h2 {
+.form-container h2 {
     color: var(--color-principal);
     font-size: 28px;
     text-align: center;
@@ -40,7 +40,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 /* Estilos para las etiquetas de los campos */
-.formulario-carga-archivo label {
+.form-container label {
     display: block;
     color: #333;
     font-weight: bold;
@@ -49,7 +49,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 /* Estilos para los campos de entrada */
-.formulario-carga-archivo input[type="file"] {
+.form-container input[type="file"] {
     width: 100%;
     padding: 12px;
     border: 1px solid var(--color-borde);
@@ -61,7 +61,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 /* Estilos para el botón */
-.formulario-carga-archivo button {
+.form-container input[type="submit"] {
     background-color: var(--color-boton);
     color: var(--color-secundario);
     padding: 10px 20px;
@@ -74,7 +74,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 /* Cambio de color cuando el botón es hover */
-.formulario-carga-archivo button:hover {
+.form-container input[type="submit"]:hover {
     background-color: var(--color-boton-hover);
 }
 
@@ -96,10 +96,3 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     background-color: #d4edda;
     color: #155724;
 }
-
-/* Estilo para los campos con errores */
-.input-error {
-    border: 1px solid #e74c3c;
-    background-color: #f8d7da;
-}
-

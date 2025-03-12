@@ -1,15 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package AreaVentas;
 
-/**
- *
- * @author alejandro
- */
+import Admin.ConectarUsuarios;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 public class Producto {
+
     private int idUnion;
     private String nombreComputadora;
     private String nombreMolde;
@@ -55,4 +54,31 @@ public class Producto {
     public void setPrecioTotal(double precioTotal) {
         this.precioTotal = precioTotal;
     }
+
+    public static Producto obtenerProductoPorId(int idUnion) {
+        Producto producto = null;
+        Connection conexion = new ConectarUsuarios().conectar();
+        String sql = "SELECT idComputadora, idMolde, precioTotal "
+                + "FROM computadora_molde_componente "
+                + "WHERE idUnion = ?";
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+            statement.setInt(1, idUnion);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                producto = new Producto();
+                producto.setIdUnion(idUnion);
+                producto.setNombreComputadora(resultSet.getString("idComputadora"));
+                producto.setNombreMolde(resultSet.getString("idMolde"));
+
+                producto.setPrecioTotal(resultSet.getDouble("precioTotal"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return producto;
+    }
+
+  
+
 }
