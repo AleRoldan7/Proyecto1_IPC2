@@ -1,12 +1,7 @@
 /*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
-*/
-/* 
     Created on : 21 feb 2025, 2:39:23
     Author     : alejandro
 */
-
 
 * {
     margin: 0;
@@ -14,32 +9,36 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     box-sizing: border-box;
 }
 
-
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+    background-color: #f9e8d8; /* Warm peach background for a friendly feel */
+    background-image: linear-gradient(135deg, #f9e8d8 0%, #e8f0f5 100%); /* Subtle gradient */
+    color: #34495e;
     line-height: 1.6;
     padding: 20px;
 }
 
-
 h1 {
     text-align: center;
-    color: #333;
+    color: #e67e22; /* Warm orange for header */
     margin-bottom: 20px;
 }
 
-
 form {
-    display: inline-block;
-    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
     margin-bottom: 20px;
 }
 
 button {
-    background-color: #4CAF50; 
-    border: none;
+    background-color: #3498db; /* Blue for primary action */
     color: white;
     padding: 12px 20px;
     text-align: center;
@@ -47,39 +46,34 @@ button {
     display: inline-block;
     font-size: 16px;
     cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px;
+    border-radius: 6px;
     transition: background-color 0.3s;
+    margin-top: 10px;
+    border: none;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #2980b9; /* Darker blue on hover */
 }
-
-
-button:focus {
-    outline: none;
-}
-
 
 button:last-child {
-    background-color: #f44336; 
+    background-color: #e67e22; /* Warm orange for secondary button */
 }
 
 button:last-child:hover {
-    background-color: #da190b;
+    background-color: #d35400; /* Darker orange on hover */
 }
 
 button:nth-last-child(2) {
-    background-color: #2196F3; 
+    background-color: #f44336;
 }
 
 button:nth-last-child(2):hover {
-    background-color: #0b78c6;
+    background-color: #da190b;
 }
 
 button:nth-last-child(3) {
-    background-color: #ff9800; 
+    background-color: #ff9800;
 }
 
 button:nth-last-child(3):hover {
@@ -87,24 +81,24 @@ button:nth-last-child(3):hover {
 }
 
 button:nth-last-child(4) {
-    background-color: #009688; 
+    background-color: #009688;
 }
 
 button:nth-last-child(4):hover {
     background-color: #00796b;
 }
 
-
-form {
-    display: flex;
-    flex-direction: column;
-    margin: 20px 0;
-}
-
-form button {
-    width: 100%;
-}
-
 .container {
     text-align: center;
+}
+
+@media (max-width: 480px) {
+    form {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
 }

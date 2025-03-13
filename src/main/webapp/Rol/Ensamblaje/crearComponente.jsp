@@ -6,7 +6,8 @@
 
 <%@ page import="AreaEnsamblaje.GestionComponentes" %>
 <%@ page import="java.io.IOException" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.util.List" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,10 +16,10 @@
         <link href="EnsamblajeCSS/styleCrear.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        
+
         <h1>Creación y Actualización de Componentes</h1>
-        
-        
+
+        <!-- Formulario para crear nuevo componente -->
         <div class="container">
             <h2>Crear Nuevo Componente</h2>
             <form action="crearComponente.jsp" method="post">
@@ -47,12 +48,25 @@
             </form>
         </div>
 
-        
         <div class="container">
             <h2>Agregar Más Cantidad a un Componente Existente</h2>
             <form action="crearComponente.jsp" method="post">
+
                 <label for="nombreComponenteExistente">Nombre de Componente Existente:</label>
-                <input type="text" id="nombreComponenteExistente" name="nombreComponenteExistente" required>
+                <select id="nombreComponenteExistente" name="nombreComponenteExistente" required>
+                    <option value="" disabled selected>Selecciona un Componente Existente</option>
+                    <%
+                        List<GestionComponentes> listaComponentes = GestionComponentes.obtenerComponentes();
+                        if (listaComponentes != null && !listaComponentes.isEmpty()) {
+                            for (GestionComponentes componente : listaComponentes) {
+                                String nombre = componente.getNombreComponenteString();
+                                out.println("<option value='" + nombre + "'>" + nombre + "</option>");
+                            }
+                        } else {
+                            out.println("<option value='' disabled>No hay componentes disponibles</option>");
+                        }
+                    %>
+                </select>
                 <br>
 
                 <label for="cantidadAgregar">Cantidad a Agregar:</label>
@@ -65,7 +79,7 @@
         <form action="ensamblaje.jsp" method="get">
             <button type="submit">Regresar</button>
         </form>
-        
+
         <%
             String nombreComponente = request.getParameter("nombreComponente");
             String tipoComponente = request.getParameter("tipoComponente");
@@ -75,7 +89,6 @@
             String nombreComponenteExistente = request.getParameter("nombreComponenteExistente");
             String cantidadAgregarStr = request.getParameter("cantidadAgregar");
 
-            
             if (nombreComponente != null && tipoComponente != null && precioComponenteStr != null && cantidadComponenteStr != null) {
                 try {
                     precioComponenteStr = precioComponenteStr.replace(",", ".");
@@ -99,7 +112,6 @@
                 }
             }
 
-            
             if (nombreComponenteExistente != null && cantidadAgregarStr != null) {
                 try {
                     int cantidadAgregar = Integer.parseInt(cantidadAgregarStr);

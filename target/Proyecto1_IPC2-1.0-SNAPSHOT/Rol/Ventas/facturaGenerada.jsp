@@ -4,78 +4,60 @@
     Author     : alejandro
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="AreaVentas.Producto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.sql.*, Admin.ConectarUsuarios"%>
 <!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Vista Previa de la Venta</title>
-</head>
-<body>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Vista Previa de la Venta</title>
+    </head>
+    <body>
+        <h2>Factura Generada</h2>
 
-<%-- Obtener el idVenta desde los parámetros de la solicitud (por ejemplo, después de confirmar la compra) --%>
-<%
-    int idVenta = Integer.parseInt(request.getParameter("idVenta"));
-    ConectarUsuarios conexionBD = new ConectarUsuarios();
-    Connection conn = null;
-    PreparedStatement pst = null;
-    ResultSet rs = null;
+        <!-- Mostrar el compradorId para depuración -->
+        <p>compradorId: ${param.compradorId}</p>
 
-    try {
-        conn = conexionBD.conectar();
+        <!-- Mostrar los productos seleccionados -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre de la Computadora</th>
+                    <th>Nombre del Molde</th>
+                    <th>Componente</th>
+                    <th>Precio Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%
+                    List<Producto> productos = (List<Producto>) request.getAttribute("productos");
+                    if (productos != null) {
+                        for (Producto producto : productos) {
+                %>
+                <tr>
+                    <td><%= producto.getNombreComputadora()%></td>
+                    <td><%= producto.getNombreMolde()%></td>
+                    <td><%= producto.getNombreComponente() != null ? producto.getNombreComponente() : "Sin componente"%></td>
+                    <td><%= producto.getPrecioTotal()%></td>
+                </tr>
+                <%
+                        }
+                    }
+                %>
+            </tbody>
+        </table>
 
-        if (conn != null) {
-            // Obtener los detalles del comprador
-            String queryComprador = "SELECT c.nombre AS nombreComprador, c.direccion, c.telefono, p.nombre AS nombreProducto, p.precio FROM venta_comprador vc"
-                                    + " JOIN comprador c ON vc.idComprador = c.idComprador"
-                                    + " JOIN venta v ON vc.idVenta = v.idVenta"
-                                    + " JOIN producto p ON v.idProducto = p.idProducto"
-                                    + " WHERE vc.idVendido = ?";
-            pst = conn.prepareStatement(queryComprador);
-            pst.setInt(1, idVenta);
-            rs = pst.executeQuery();
+        <!-- Formulario para generar la factura en PDF -->
+        <form action="${pageContext.request.contextPath}/GenerarFacturaServlet" method="get">
+            <input type="hidden" name="compradorId" value="${param.compradorId}">
+            <button type="submit">Generar Factura PDF</button>
+        </form>
 
-            if (rs.next()) {
-                String nombreComprador = rs.getString("nombreComprador");
-                String direccion = rs.getString("direccion");
-                String telefono = rs.getString("telefono");
-                String nombreProducto = rs.getString("nombreProducto");
-                double precio = rs.getDouble("precio");
+        <!-- Enlace para ver la factura en PDF -->
+        <a href="${pageContext.request.contextPath}/GenerarFacturaServlet?compradorId=${param.compradorId}" target="_blank">Ver factura en PDF</a>
 
-                // Mostrar los datos del comprador y producto
-                out.println("<h2>Vista Previa de la Compra</h2>");
-                out.println("<h3>Datos del Comprador</h3>");
-                out.println("<p><strong>Nombre: </strong>" + nombreComprador + "</p>");
-                out.println("<p><strong>Dirección: </strong>" + direccion + "</p>");
-                out.println("<p><strong>Teléfono: </strong>" + telefono + "</p>");
-                
-                out.println("<h3>Producto Comprado</h3>");
-                out.println("<p><strong>Producto: </strong>" + nombreProducto + "</p>");
-                out.println("<p><strong>Precio: </strong>$" + precio + "</p>");
-
-                // Botón para generar la factura
-                out.println("<form action='GenerarFactura.jsp' method='post'>");
-                out.println("<input type='hidden' name='idVenta' value='" + idVenta + "' />");
-                out.println("<button type='submit'>Generar Factura</button>");
-                out.println("</form>");
-            } else {
-                out.println("<h3>No se encontraron detalles para esta venta.</h3>");
-            }
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-        out.println("<p>Error al procesar la solicitud.</p>");
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (pst != null) pst.close();
-            if (conn != null) conexionBD.cerrarConexion(conn, null, null);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-%>
-
-</body>
+        <br><br>
+        <a href="../Rol/Ventas/venta.jsp">Volver a Ventas</a>
+    </body>
 </html>

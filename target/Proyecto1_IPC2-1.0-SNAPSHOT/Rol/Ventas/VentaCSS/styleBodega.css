@@ -1,8 +1,4 @@
 /*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
-*/
-/* 
     Created on : 10 mar 2025, 0:58:14
     Author     : alejandro
 */
@@ -10,8 +6,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 /* Estilos generales para el cuerpo de la página */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #f9e8d8; /* Fondo suave de melocotón */
+    background-image: linear-gradient(135deg, #f9e8d8 0%, #e8f0f5 100%); /* Gradiente sutil */
+    color: #34495e; /* Color gris azulado para el texto */
     padding: 30px;
     margin: 0;
 }
@@ -19,7 +16,7 @@ body {
 /* Estilo para el título */
 h1 {
     text-align: center;
-    color: #333;
+    color: #e67e22; /* Naranja cálido para el encabezado */
     font-size: 2em;
     margin-bottom: 30px;
 }
@@ -41,7 +38,7 @@ th, td {
 
 /* Estilo para los encabezados de la tabla */
 th {
-    background-color: #4CAF50;
+    background-color: #e67e22; /* Naranja cálido */
     color: white;
     font-size: 1.1em;
 }
@@ -68,7 +65,7 @@ form {
 }
 
 button {
-    background-color: #4CAF50;
+    background-color: #3498db; /* Azul para la acción primaria */
     color: white;
     padding: 10px 20px;
     font-size: 1em;
@@ -79,9 +76,56 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #2980b9; /* Azul más oscuro al pasar el cursor */
 }
 
 button:focus {
     outline: none;
+}
+
+button:last-child {
+    background-color: #e67e22; /* Naranja cálido para el segundo botón */
+}
+
+button:last-child:hover {
+    background-color: #d35400; /* Naranja más oscuro al pasar el cursor */
+}
+
+button:nth-last-child(2) {
+    background-color: #f44336; /* Rojo para un botón de eliminación o alerta */
+}
+
+button:nth-last-child(2):hover {
+    background-color: #da190b; /* Rojo más oscuro al pasar el cursor */
+}
+
+button:nth-last-child(3) {
+    background-color: #ff9800; /* Naranja para otro botón secundario */
+}
+
+button:nth-last-child(3):hover {
+    background-color: #e68900; /* Naranja más oscuro al pasar el cursor */
+}
+
+button:nth-last-child(4) {
+    background-color: #009688; /* Verde azulado para acciones secundarias */
+}
+
+button:nth-last-child(4):hover {
+    background-color: #00796b; /* Verde azulado más oscuro al pasar el cursor */
+}
+
+.container {
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    form {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
 }

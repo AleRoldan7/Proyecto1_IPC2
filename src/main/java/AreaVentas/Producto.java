@@ -14,6 +14,9 @@ public class Producto {
     private String nombreMolde;
     private String nombreComponente;
     private double precioTotal;
+    private int idComputadora;
+    private int idMolde;
+    private int idComponente;
 
     public int getIdUnion() {
         return idUnion;
@@ -55,6 +58,32 @@ public class Producto {
         this.precioTotal = precioTotal;
     }
 
+    public int getIdComputadora() {
+        return idComputadora;
+    }
+
+    public void setIdComputadora(int idComputadora) {
+        this.idComputadora = idComputadora;
+    }
+
+    public int getIdMolde() {
+        return idMolde;
+    }
+
+    public void setIdMolde(int idMolde) {
+        this.idMolde = idMolde;
+    }
+
+    public int getIdComponente() {
+        return idComponente;
+    }
+
+    public void setIdComponente(int idComponente) {
+        this.idComponente = idComponente;
+    }
+    
+    
+
     public static Producto obtenerProductoPorId(int idUnion) {
         Producto producto = null;
         Connection conexion = new ConectarUsuarios().conectar();
@@ -78,7 +107,5 @@ public class Producto {
         }
         return producto;
     }
-
-  
 
 }

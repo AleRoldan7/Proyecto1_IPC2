@@ -4,12 +4,6 @@
     Author     : alejandro
 --%>
 
-<%-- 
-    Document   : ensamblarComponentes
-    Created on : 1 mar 2025, 21:24:39
-    Author     : alejandro
---%>
-
 <%@ page import="Admin.ConectarUsuarios" %>
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.PreparedStatement" %>
@@ -27,7 +21,8 @@
     <body>
         <h1>Área de Ensamblaje</h1>
         
-        <form action="ensamblarComponentes.jsp" method="post">
+        <!-- Formulario para seleccionar un molde -->
+        <form action="ensamblarComponentes.jsp" method="get">
             <label for="molde">Seleccionar Molde:</label>
             <select name="idMolde" id="molde">
                 <option value="" selected disabled>Seleccione un molde</option>
@@ -57,6 +52,7 @@
             <button type="submit">Ver Componentes</button>
         </form>
 
+        <!-- Botón para crear un nuevo molde -->
         <form action="crearMolde.jsp" method="get">
             <button type="submit">Crear Nuevo Molde</button>
         </form>
@@ -98,6 +94,7 @@
             <input type="hidden" name="idMolde" value="<%= idMolde %>">
             <button type="submit">Ensamblar Computadora</button>
         </form>
+
         <%
                 } catch (SQLException e) {
                     out.println("<p>Error al cargar los componentes: " + e.getMessage() + "</p>");
@@ -108,7 +105,7 @@
                 }
             }
         %>
-        
+
         <form action="ensamblaje.jsp" method="get">
             <button type="submit">Regresar</button>
         </form>
@@ -122,13 +119,11 @@
                         conn = new ConectarUsuarios().conectar();
                         EnsamblajeConMolde ensamblaje = new EnsamblajeConMolde();
 
-                        
                         String query = "SELECT idComponente, cantidad FROM molde_componente WHERE idMolde = ?";
                         stmt = conn.prepareStatement(query);
                         stmt.setInt(1, Integer.parseInt(idMoldeSeleccionado));
                         rs = stmt.executeQuery();
 
-                        
                         java.util.List<String> componentes = new java.util.ArrayList<>();
                         java.util.List<Integer> cantidades = new java.util.ArrayList<>();
 
@@ -137,11 +132,9 @@
                             cantidades.add(rs.getInt("cantidad"));
                         }
 
-                        
                         String[] componentesArray = componentes.toArray(new String[0]);
                         int[] cantidadesArray = cantidades.stream().mapToInt(i -> i).toArray();
 
-                       
                         boolean resultado = ensamblaje.ensamblarComputadora(
                             Integer.parseInt(idMoldeSeleccionado), componentesArray, cantidadesArray);
 

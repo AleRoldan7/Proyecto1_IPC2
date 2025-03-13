@@ -9,18 +9,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author alejandro
  */
-public class GestionComponentes extends Componentes{
-    
+public class GestionComponentes extends Componentes {
+
     public GestionComponentes(String nombreComponente, String tipoComponente, int cantidadComponente, double precioComponente) {
         super(nombreComponente, tipoComponente, cantidadComponente, precioComponente);
     }
-    
-    
+
     public boolean agregarComponente() {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -44,15 +45,18 @@ public class GestionComponentes extends Componentes{
             return false;
         } finally {
             try {
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    
     public boolean verificarComponenteExistente(String nombreComponente) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -74,9 +78,15 @@ public class GestionComponentes extends Componentes{
             return false;
         } finally {
             try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -93,7 +103,6 @@ public class GestionComponentes extends Componentes{
             ConectarUsuarios conexion = new ConectarUsuarios();
             conn = conexion.conectar();
 
-            
             String consultaStock = "SELECT cantidadStock FROM componente WHERE nombreComponente = ?";
             stmt = conn.prepareStatement(consultaStock);
             stmt.setString(1, nombreComponente);
@@ -103,12 +112,12 @@ public class GestionComponentes extends Componentes{
                 int cantidadActual = rs.getInt("cantidadStock");
 
                 if (cantidadEliminar >= cantidadActual) {
-                    
+
                     String queryEliminar = "DELETE FROM componente WHERE nombreComponente = ?";
                     updateStmt = conn.prepareStatement(queryEliminar);
                     updateStmt.setString(1, nombreComponente);
                 } else {
-                    
+
                     String queryActualizar = "UPDATE componente SET cantidadStock = cantidadStock - ? WHERE nombreComponente = ?";
                     updateStmt = conn.prepareStatement(queryActualizar);
                     updateStmt.setInt(1, cantidadEliminar);
@@ -118,7 +127,7 @@ public class GestionComponentes extends Componentes{
                 int rowsAffected = updateStmt.executeUpdate();
                 return rowsAffected > 0;
             } else {
-                return false; 
+                return false;
             }
 
         } catch (SQLException e) {
@@ -126,10 +135,18 @@ public class GestionComponentes extends Componentes{
             return false;
         } finally {
             try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (updateStmt != null) updateStmt.close();
-                if (conn != null) conn.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (updateStmt != null) {
+                    updateStmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -137,20 +154,20 @@ public class GestionComponentes extends Componentes{
     }
 
     public boolean agregarCantidad(int cantidad) {
-        
+
         String query = "UPDATE componente SET cantidadStock = cantidadStock + ? WHERE nombreComponente = ?";
 
         Connection conn = null;
         PreparedStatement stmt = null;
 
         try {
-           
+
             ConectarUsuarios conexion = new ConectarUsuarios();
             conn = conexion.conectar();
 
             stmt = conn.prepareStatement(query);
-            stmt.setInt(1, cantidad);  
-            stmt.setString(2, this.nombreComponente);  
+            stmt.setInt(1, cantidad);
+            stmt.setString(2, this.nombreComponente);
 
             int filasAfectadas = stmt.executeUpdate();
             return filasAfectadas > 0;
@@ -160,14 +177,95 @@ public class GestionComponentes extends Componentes{
             return false;
         } finally {
             try {
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    public static List<GestionComponentes> obtenerComponentes() {
+        List<GestionComponentes> listaComponentes = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
-    
+        try {
+            ConectarUsuarios conexion = new ConectarUsuarios();
+            conn = conexion.conectar();
+
+            String query = "SELECT nombreComponente, tipoComponente, cantidadStock, precioComponente FROM componente";
+            stmt = conn.prepareStatement(query);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String nombreComponente = rs.getString("nombreComponente");
+                String tipoComponente = rs.getString("tipoComponente");
+                int cantidadStock = rs.getInt("cantidadStock");
+                double precioComponente = rs.getDouble("precioComponente");
+
+                GestionComponentes componente = new GestionComponentes(nombreComponente, tipoComponente, cantidadStock, precioComponente);
+                listaComponentes.add(componente);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return listaComponentes;
+    }
+
+    public boolean actualizarPrecio(double nuevoPrecio) {
+        String query = "UPDATE componente SET precioComponente = ? WHERE nombreComponente = ?";
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            ConectarUsuarios conexion = new ConectarUsuarios();
+            conn = conexion.conectar();
+
+            stmt = conn.prepareStatement(query);
+            stmt.setDouble(1, nuevoPrecio);
+            stmt.setString(2, this.nombreComponente);
+
+            int filasAfectadas = stmt.executeUpdate();
+            return filasAfectadas > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

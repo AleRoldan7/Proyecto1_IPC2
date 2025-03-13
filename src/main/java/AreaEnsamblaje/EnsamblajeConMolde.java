@@ -21,7 +21,6 @@ public class EnsamblajeConMolde {
             conn = new ConectarUsuarios().conectar();
             conn.setAutoCommit(false);
 
-            // Verificar stock
             for (int i = 0; i < componentesSeleccionados.length; i++) {
                 int idComponente = Integer.parseInt(componentesSeleccionados[i]);
                 int cantidad = cantidades[i];
@@ -34,17 +33,16 @@ public class EnsamblajeConMolde {
                         int stockDisponible = rs.getInt("cantidadStock");
                         if (stockDisponible < cantidad) {
                             conn.rollback();
-                            return false; // No hay suficiente stock
+                            return false; 
                         }
                     } else {
                         conn.rollback();
-                        return false; // Componente no encontrado
+                        return false; 
                     }
                     rs.close();
                 }
             }
 
-            // Descontar stock
             for (int i = 0; i < componentesSeleccionados.length; i++) {
                 int idComponente = Integer.parseInt(componentesSeleccionados[i]);
                 int cantidad = cantidades[i];
@@ -58,7 +56,7 @@ public class EnsamblajeConMolde {
             }
 
             conn.commit();
-            return true; // Ensamblaje exitoso
+            return true; 
         } catch (SQLException e) {
             if (conn != null) {
                 try {
@@ -90,7 +88,6 @@ public class EnsamblajeConMolde {
         }
     }
 
-    // Método para calcular el costo total de los componentes seleccionados
     public double calcularCosto(String[] componentesSeleccionados, int[] cantidades, Connection conn) throws SQLException {
         double costoTotal = 0.0;
 

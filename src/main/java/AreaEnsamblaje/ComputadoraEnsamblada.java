@@ -57,43 +57,87 @@ public class ComputadoraEnsamblada extends Componentes {
     }
 
     public boolean registrarUnion(int idMolde, List<Integer> idsComponentes) {
-        Connection conexion = null;
-        PreparedStatement ps = null;
-        try {
-            ConectarUsuarios conn = new ConectarUsuarios();
-            conexion = conn.conectar();
+    Connection conexion = null;
+    PreparedStatement ps = null;
+    try {
+        // Conexión a la base de datos
+        ConectarUsuarios conn = new ConectarUsuarios();
+        conexion = conn.conectar();
+        
+        // Desactivar auto-commit para manejar la transacción correctamente
+        conexion.setAutoCommit(false);
+        
+        // SQL para actualizar el stock de los componentes
+        String sqlActualizarStock = "UPDATE computadora_molde_componente SET stock = stock + 1 WHERE idComponente = ? AND idMolde = ?";
+        ps = conexion.prepareStatement(sqlActualizarStock);
+        
+        // Actualizar el stock de cada componente
+        for (int idComponente : idsComponentes) {
+            ps.setInt(1, idComponente);
+            ps.setInt(2, idMolde);
+            ps.addBatch();
+        }
 
-            String sql = "INSERT INTO computadora_molde_componente (idComputadora, idMolde, idComponente) VALUES (?, ?, ?)";
-            ps = conexion.prepareStatement(sql);
+        // Ejecutar actualización de stock
+        int[] resultadosStock = ps.executeBatch();
 
-            for (int idComponente : idsComponentes) {
-                ps.setInt(1, this.idComputadora);
-                ps.setInt(2, idMolde);
-                ps.setInt(3, idComponente);
-                ps.addBatch();
-            }
-
-            int[] resultados = ps.executeBatch();
-
-            for (int resultado : resultados) {
-                if (resultado == PreparedStatement.EXECUTE_FAILED) {
-                    return false;
-                }
-            }
-
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (ps != null) ps.close();
-                if (conexion != null) conexion.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+        // Si alguna actualización falló, revertir la transacción
+        for (int resultado : resultadosStock) {
+            if (resultado == PreparedStatement.EXECUTE_FAILED) {
+                conexion.rollback();
+                return false;
             }
         }
-        return false;
+
+        // Ahora insertamos los registros en la tabla computadora_molde_componente
+        String sqlInsertar = "INSERT INTO computadora_molde_componente (idComputadora, idMolde, idComponente, fechaEnsamblaje, nombreUsuario, precioTotal) VALUES (?, ?, ?, NOW(), ?, ?)";
+        ps = conexion.prepareStatement(sqlInsertar);
+
+        // Insertar en la tabla computadora_molde_componente
+        for (int idComponente : idsComponentes) {
+            ps.setInt(1, this.idComputadora);
+            ps.setInt(2, idMolde);
+            ps.setInt(3, idComponente);
+            ps.setString(4, "Usuario");  // Esto debería ser el nombre del usuario que está realizando la operación
+           
+            ps.addBatch();
+        }
+
+        // Ejecutar la inserción
+        int[] resultadosInsert = ps.executeBatch();
+
+        // Si alguna inserción falló, revertir la transacción
+        for (int resultado : resultadosInsert) {
+            if (resultado == PreparedStatement.EXECUTE_FAILED) {
+                conexion.rollback();
+                return false;
+            }
+        }
+
+        // Confirmar la transacción
+        conexion.commit();
+        return true;
+        
+    } catch (SQLException e) {
+        e.printStackTrace();
+        try {
+            if (conexion != null) {
+                conexion.rollback();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    } finally {
+        try {
+            if (ps != null) ps.close();
+            if (conexion != null) conexion.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
+    return false;
+}
+
 
     public double calcularPrecioTotal(List<Integer> idsComponentes) {
         Connection conexion = null;

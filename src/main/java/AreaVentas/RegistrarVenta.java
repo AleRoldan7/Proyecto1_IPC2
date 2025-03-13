@@ -67,44 +67,57 @@ public class RegistrarVenta extends HttpServlet {
         String usuario = request.getParameter("nit");
         Connection conn = new ConectarUsuarios().conectar();
         String query1 = "SELECT idComprador,nombreComprador, direccion, celularComprador, emailComprador FROM comprador WHERE nit = ?";
-                
+
         PreparedStatement stmt2;
         try {
             stmt2 = conn.prepareStatement(query1);
-            stmt2.setString(1,usuario);
+            stmt2.setString(1, usuario);
             ResultSet rst = stmt2.executeQuery();
-                if (rst.next()) {
-                    System.out.println("CAMBIANDO ID COMPRADOR");
-                
-                    usuario = rst.getString("idComprador");
-                    System.out.println("USUARIO: " + usuario);
-                } else {
-                    request.setAttribute("mensajeError", "Cliente no encontrado con ese NIT.");
-                }
+            if (rst.next()) {
+                System.out.println("CAMBIANDO ID COMPRADOR");
+                usuario = rst.getString("idComprador");
+                System.out.println("USUARIO: " + usuario);
+            } else {
+                request.setAttribute("mensajeError", "Cliente no encontrado con ese NIT.");
+            }
 
         } catch (SQLException ex) {
             Logger.getLogger(RegistrarVenta.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         if (productosSeleccionados != null) {
             System.out.println("ID DEL COMPRADOR: " + usuario);
             for (String id : productosSeleccionados) {
-                
-            String query = "INSERT INTO venta (idComprador, idProducto) VALUES (?,?)";
+
+                // Insertar en la tabla venta
+                String query = "INSERT INTO venta (idComprador, idProducto) VALUES (?,?)";
                 try {
                     stmt = conn.prepareStatement(query);
                     stmt.setString(1, usuario);
                     stmt.setString(2, id);
                     stmt.executeUpdate();
+
+                    String queryStock = "UPDATE computadora_molde_componente SET stock = stock - 1 WHERE idComputadora = ? AND stock > 0";
+                    PreparedStatement stmtStock = conn.prepareStatement(queryStock);
+                    stmtStock.setString(1, id);  // Aquí usamos `id`, ya que es el identificador del producto
+                    int rowsAffected = stmtStock.executeUpdate();
+
+                    // Verificar si el stock se agotó y eliminar el producto
+                    if (rowsAffected > 0) {
+                        String deleteQuery = "DELETE FROM computadora_molde_componente WHERE idComputadora = ? ";
+                        PreparedStatement deleteStmt = conn.prepareStatement(deleteQuery);
+                        deleteStmt.setString(1, id);  // Aquí también usamos `id`
+                        deleteStmt.executeUpdate();
+                    } else {
+                        request.setAttribute("mensajeError", "No hay suficiente stock para el producto ID: " + id);
+                    }
                 } catch (SQLException ex) {
                     Logger.getLogger(RegistrarVenta.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-          
         }
 
         processRequest(request, response);
-
     }
 
     /**

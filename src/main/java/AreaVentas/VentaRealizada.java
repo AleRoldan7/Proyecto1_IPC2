@@ -23,7 +23,6 @@ public class VentaRealizada extends Comprador {
         this.montoTotal = montoTotal;
     }
 
-    // Getters y Setters
     public int getIdVenta() {
         return idVenta;
     }

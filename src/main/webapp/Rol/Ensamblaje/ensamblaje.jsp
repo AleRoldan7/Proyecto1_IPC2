@@ -16,33 +16,34 @@
         <div class="container">
             <h1>Bienvenido Ensamblador</h1>
 
-                <form action="crearComponente.jsp" method="get">
-                    <button type="submit">Crear Componente</button>
-                </form>
+            <form action="crearComponente.jsp" method="get">
+                <button type="submit">Crear Componente</button>
+            </form>
 
+            <form action="eliminarComponente.jsp" method="get">
+                <button type="submit">Eliminar Componente</button>
+            </form>
 
-                <form action="eliminarComponente.jsp" method="get">
-                    <button type="submit">Eliminar Componente</button>
-                </form>
-                
-                <form action="ensamblarComponentes.jsp" method="get">
-                    <button>Ensamblar Componentes</button>
-                </form>
-                
-                <form action="registrarNombreComputadora.jsp" method="get">
-                    <button>Registrar Computadoras</button>
-                </form>
-                
-                
-                <form action="cantidadComponentes.jsp" method="get">
-                    <button>Stock de componentes</button>
-                </form>
-                
+            <form action="ensamblarComponentes.jsp" method="get">
+                <button type="submit">Ensamblar Componentes</button>
+            </form>
+
+            <form action="registrarNombreComputadora.jsp" method="get">
+                <button type="submit">Registrar Computadoras</button>
+            </form>
+
+            <form action="cantidadComponentes.jsp" method="get">
+                <button type="submit">Stock de componentes</button>
+            </form>
+            
+            <form action="computadoraEnsamblada.jsp" method="get">
                 <button>Info. Ensamblador</button>
-                
-                <form action="../../Frontend/index.jsp" method="get">
-                    <button>Inicio Sesión</button>
-                </form>
+            </form>
+           
+
+            <form action="../../Frontend/index.jsp" method="get">
+                <button type="submit">Inicio Sesión</button>
+            </form>
         </div>
     </body>
 </html>

@@ -44,7 +44,7 @@
         
         <br>
         
-        <<form action="ensamblarMoldeComputadora.jsp" method="get">
+        <form action="ensamblarMoldeComputadora.jsp" method="get">
             <button type="submit">Ensamblar Computadora</button>
         </form>
         <form action="ensamblaje.jsp" method="get">

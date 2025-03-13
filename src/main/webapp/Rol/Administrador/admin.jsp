@@ -40,6 +40,9 @@
                 <button>Cargar Archivo</button>
             </form>
             
+            <form action="../../ensamblaje.jsp" method="get">
+                <button>Ensamblaje</button>
+            </form>
             
             <table>
                 <thead>

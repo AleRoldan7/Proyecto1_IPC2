@@ -33,9 +33,8 @@
 
                     try {
                         conn = new ConectarUsuarios().conectar();
-                        conn.setAutoCommit(false); // Desactivar autocommit para manejar transacciones
+                        conn.setAutoCommit(false); 
 
-                        // Verificar si el molde ya existe
                         String verificarMoldeSQL = "SELECT idMolde FROM molde WHERE nombreMolde = ?";
                         stmt = conn.prepareStatement(verificarMoldeSQL);
                         stmt.setString(1, nombreMolde);
@@ -44,7 +43,6 @@
                         if (rs.next()) {
                             out.println("<p>Error: Ya existe un molde con el nombre '" + nombreMolde + "'.</p>");
                         } else {
-                            // Insertar el molde
                             String insertMoldeSQL = "INSERT INTO molde (nombreMolde) VALUES (?)";
                             stmt = conn.prepareStatement(insertMoldeSQL, PreparedStatement.RETURN_GENERATED_KEYS);
                             stmt.setString(1, nombreMolde);
@@ -58,7 +56,6 @@
                                 }
 
                                 if (idMolde > 0) {
-                                    // Insertar los componentes del molde con sus cantidades
                                     String insertComponentSQL = "INSERT INTO molde_componente (idMolde, idComponente, cantidad) VALUES (?, ?, ?)";
                                     stmt = conn.prepareStatement(insertComponentSQL);
 
@@ -66,23 +63,22 @@
                                         int cantidad = Integer.parseInt(request.getParameter("cantidad_" + idComponente)); // Obtener la cantidad
                                         stmt.setInt(1, idMolde);
                                         stmt.setInt(2, Integer.parseInt(idComponente));
-                                        stmt.setInt(3, cantidad); // Insertar la cantidad
+                                        stmt.setInt(3, cantidad);
                                         stmt.executeUpdate();
                                     }
 
-                                    conn.commit(); // Confirmar la transacción
+                                    conn.commit(); 
                                     out.println("<p>Molde creado correctamente.</p>");
                                 }
                             } else {
-                                conn.rollback(); // Revertir la transacción si no se pudo insertar el molde
+                                conn.rollback(); 
                                 out.println("<p>Error al crear el molde.</p>");
                             }
                         }
                     } catch (SQLException e) {
-                        if (conn != null) conn.rollback(); // Revertir la transacción en caso de error
+                        if (conn != null) conn.rollback(); 
                         out.println("<p>Error en la base de datos: " + e.getMessage() + "</p>");
                     } finally {
-                        // Cerrar recursos
                         if (rs != null) rs.close();
                         if (stmt != null) stmt.close();
                         if (conn != null) conn.close();
