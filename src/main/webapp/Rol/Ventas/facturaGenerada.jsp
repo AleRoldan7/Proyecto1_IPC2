@@ -20,7 +20,7 @@
         <p>compradorId: ${param.compradorId}</p>
 
         <!-- Mostrar los productos seleccionados -->
-        <table>
+        <table border="1">
             <thead>
                 <tr>
                     <th>Nombre de la Computadora</th>
@@ -31,18 +31,25 @@
             </thead>
             <tbody>
                 <%
+                    // Recupera la lista de productos del request
                     List<Producto> productos = (List<Producto>) request.getAttribute("productos");
                     if (productos != null) {
                         for (Producto producto : productos) {
                 %>
                 <tr>
-                    <td><%= producto.getNombreComputadora()%></td>
-                    <td><%= producto.getNombreMolde()%></td>
-                    <td><%= producto.getNombreComponente() != null ? producto.getNombreComponente() : "Sin componente"%></td>
-                    <td><%= producto.getPrecioTotal()%></td>
+                    <td><%= producto.getNombreComputadora() %></td>
+                    <td><%= producto.getNombreMolde() %></td>
+                    <td><%= producto.getNombreComponente() != null ? producto.getNombreComponente() : "Sin componente" %></td>
+                    <td><%= producto.getPrecioTotal() %></td>
                 </tr>
                 <%
                         }
+                    } else {
+                %>
+                <tr>
+                    <td colspan="4">No hay productos seleccionados.</td>
+                </tr>
+                <%
                     }
                 %>
             </tbody>
@@ -58,6 +65,6 @@
         <a href="${pageContext.request.contextPath}/GenerarFacturaServlet?compradorId=${param.compradorId}" target="_blank">Ver factura en PDF</a>
 
         <br><br>
-        <a href="../Rol/Ventas/venta.jsp">Volver a Ventas</a>
+        <a href="venta.jsp">Volver a Ventas</a>
     </body>
 </html>

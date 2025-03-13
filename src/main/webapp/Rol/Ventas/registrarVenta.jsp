@@ -186,12 +186,24 @@
                     String[] productosSeleccionados = request.getParameterValues("productos");
 
                     if (productosSeleccionados != null && productosSeleccionados.length > 0) {
-                        List<Integer> productosList = new ArrayList<>();
+                        List<Producto> productosList = new ArrayList<>();
+
+                        // Simulación: Obtener los productos de la base de datos (debes reemplazar esto con tu lógica real)
                         for (String productoId : productosSeleccionados) {
-                            productosList.add(Integer.parseInt(productoId));
+                            Producto producto = new Producto();
+                            producto.setIdComputadora(Integer.parseInt(productoId));
+                            producto.setNombreComputadora("Computadora " + productoId);
+                            producto.setNombreMolde("Molde " + productoId);
+                            producto.setNombreComponente("Componente " + productoId);
+                            producto.setPrecioTotal(1000.0); // Precio de ejemplo
+                            productosList.add(producto);
                         }
 
-                        out.print("<div class='alert alert-success'>¡Compra realizada con éxito! Precio Total: </div>");
+                        // Guardar los productos en el request
+                        request.setAttribute("productos", productosList);
+
+                        // Redirigir a facturaGenerada.jsp
+                        response.sendRedirect(request.getContextPath() + "/Rol/Ventas/facturaGenerada.jsp?compradorId=" + nitCliente);
                     } else {
                         out.print("<div class='alert alert-danger'>No has seleccionado ningún producto.</div>");
                     }

@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Producto {
@@ -81,8 +82,6 @@ public class Producto {
     public void setIdComponente(int idComponente) {
         this.idComponente = idComponente;
     }
-    
-    
 
     public static Producto obtenerProductoPorId(int idUnion) {
         Producto producto = null;
@@ -106,6 +105,34 @@ public class Producto {
             e.printStackTrace();
         }
         return producto;
+    }
+
+    public static List<Producto> obtenerProductosPorCompradorId(int compradorId) {
+        List<Producto> productos = new ArrayList<>();
+        Connection conexion = new ConectarUsuarios().conectar();
+        String sql = "SELECT p.idUnion, p.nombreComputadora, p.nombreMolde, p.nombreComponente, p.precioTotal "
+                + "FROM productos p "
+                + "JOIN ventas v ON p.id = v.id_producto "
+                + "WHERE v.comprador_id = ?";
+
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+            statement.setInt(1, compradorId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Producto producto = new Producto();
+                producto.setIdUnion(resultSet.getInt("idUnion"));
+                producto.setNombreComputadora(resultSet.getString("nombreComputadora"));
+                producto.setNombreMolde(resultSet.getString("nombreMolde"));
+                producto.setNombreComponente(resultSet.getString("nombreComponente"));
+                producto.setPrecioTotal(resultSet.getDouble("precioTotal"));
+                productos.add(producto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return productos;
     }
 
 }

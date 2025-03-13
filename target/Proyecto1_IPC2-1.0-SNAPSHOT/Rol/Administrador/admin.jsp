@@ -21,29 +21,33 @@
             <form action="eliminarUsuario.jsp" method="get">
                 <button type="submit">Dar de baja</button>
             </form>
-                
-            
+
+
             <form action="crearUsuario.jsp" method="get">
                 <button type="submit">Crear Usuario</button>
             </form>
-            
+
             <form action="cambiarRol.jsp" method="get">
                 <button>Cambiar rol</button>
             </form>
-            
-            
+
+
             <form action="../../Frontend/index.jsp" method="get">
                 <button>Inicio</button>
             </form>
-            
+
             <form action="cargarArchivos.jsp" method="get">
                 <button>Cargar Archivo</button>
             </form>
-            
-            <form action="../../ensamblaje.jsp" method="get">
-                <button>Ensamblaje</button>
+
+            <form action="../Ensamblaje/ensamblaje.jsp" method="get">
+                <button type="submit">Ensamblaje</button>
             </form>
             
+            <form action="../Ventas/venta.jsp" method="get">
+                <button type="submit">Venta</button>
+            </form>
+
             <table>
                 <thead>
                     <tr>
@@ -52,8 +56,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                     
-                    
+
+
                     <% 
                         
                         ConectarUsuarios conexion = new ConectarUsuarios();
@@ -70,9 +74,9 @@
                     <tr>
                         <td><%= userName %></td>
                         <td><%= rol %></td>
-                        
+
                     </tr>
-                    
+
                     <% 
                         }
                         

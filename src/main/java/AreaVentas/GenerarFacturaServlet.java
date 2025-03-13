@@ -51,8 +51,11 @@ public class GenerarFacturaServlet extends HttpServlet {
             System.out.println("compradorId recibido: " + compradorId);
 
             // Obtener los productos comprados por el comprador
-            List<Producto> productos = obtenerProductosDeBaseDeDatos(compradorId);
+            List<Producto> productos = Producto.obtenerProductosPorCompradorId(compradorId);
             System.out.println("Productos obtenidos: " + productos.size());
+
+            // Pasar los productos al JSP para mostrar
+            request.setAttribute("productos", productos);
 
             // Generar la factura en PDF
             generarFacturaPDF(productos, request, response);
@@ -69,45 +72,13 @@ public class GenerarFacturaServlet extends HttpServlet {
         }
     }
 
-    public List<Producto> obtenerProductosDeBaseDeDatos(int compradorId) throws SQLException {
-        Connection conn = conectarUsuarios.conectar();
-        List<Producto> productos = new ArrayList<>();
-
-        String sql = "SELECT p.idComputadora, p.idMolde, p.idComponente, p.precioTotal, "
-                + "c.nombreComputadora, m.nombreMolde, cm.nombreComponente "
-                + "FROM venta v "
-                + "JOIN computadora_molde_componente cmc ON v.idProducto = cmc.idUnion "
-                + "JOIN computadora p ON cmc.idComputadora = p.idComputadora "
-                + "JOIN molde m ON cmc.idMolde = m.idMolde "
-                + "JOIN componente cm ON cmc.idComponente = cm.idComponente "
-                + "WHERE v.idComprador = ?";
-
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, compradorId);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    Producto producto = new Producto();
-                    producto.setIdComputadora(rs.getInt("idComputadora"));
-                    producto.setIdMolde(rs.getInt("idMolde"));
-                    producto.setIdComponente(rs.getInt("idComponente"));
-                    producto.setPrecioTotal(rs.getDouble("precioTotal"));
-                    producto.setNombreComputadora(rs.getString("nombreComputadora"));
-                    producto.setNombreMolde(rs.getString("nombreMolde"));
-                    producto.setNombreComponente(rs.getString("nombreComponente"));
-                    productos.add(producto);
-                }
-            }
-        } finally {
-            if (conn != null) {
-                conn.close();
-            }
-        }
-
-        return productos;
-    }
-
     public void generarFacturaPDF(List<Producto> productos, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, JRException, SQLException {
+        // Verificar el stock de los componentes antes de generar la factura
+        for (Producto producto : productos) {
+            verificarStock(producto.getIdComponente());
+        }
+
         // Cargar el reporte Jasper
         String reportPath = getServletContext().getRealPath("/WEB-INF/reports/factura.jasper");
         JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(reportPath);
@@ -146,6 +117,32 @@ public class GenerarFacturaServlet extends HttpServlet {
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "inline; filename=factura.pdf");
         response.getOutputStream().write(pdfData);
+    }
+
+    private void verificarStock(int idComponente) throws SQLException {
+        // Aquí agregamos la lógica para verificar el stock del componente
+        Connection conn = conectarUsuarios.conectar();
+        String sql = "SELECT stock FROM componente WHERE idComponente = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idComponente);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int stock = rs.getInt("stock");
+                    if (stock <= 0) {
+                        System.out.println("Componente agotado: " + idComponente);
+                        // Realizar alguna acción, por ejemplo, mostrar una advertencia o no generar la factura
+                    } else if (stock <= 5) {
+                        System.out.println("Componente a punto de agotarse: " + idComponente);
+                        // Aquí podrías agregar alguna lógica para advertir al usuario sobre el stock bajo
+                    }
+                }
+            }
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+        }
     }
 
     @Override

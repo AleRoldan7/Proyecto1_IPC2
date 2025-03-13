@@ -89,7 +89,6 @@ public class RegistrarVenta extends HttpServlet {
             System.out.println("ID DEL COMPRADOR: " + usuario);
             for (String id : productosSeleccionados) {
 
-                // Insertar en la tabla venta
                 String query = "INSERT INTO venta (idComprador, idProducto) VALUES (?,?)";
                 try {
                     stmt = conn.prepareStatement(query);
@@ -99,14 +98,13 @@ public class RegistrarVenta extends HttpServlet {
 
                     String queryStock = "UPDATE computadora_molde_componente SET stock = stock - 1 WHERE idComputadora = ? AND stock > 0";
                     PreparedStatement stmtStock = conn.prepareStatement(queryStock);
-                    stmtStock.setString(1, id);  // Aquí usamos `id`, ya que es el identificador del producto
+                    stmtStock.setString(1, id);  
                     int rowsAffected = stmtStock.executeUpdate();
 
-                    // Verificar si el stock se agotó y eliminar el producto
                     if (rowsAffected > 0) {
                         String deleteQuery = "DELETE FROM computadora_molde_componente WHERE idComputadora = ? ";
                         PreparedStatement deleteStmt = conn.prepareStatement(deleteQuery);
-                        deleteStmt.setString(1, id);  // Aquí también usamos `id`
+                        deleteStmt.setString(1, id); 
                         deleteStmt.executeUpdate();
                     } else {
                         request.setAttribute("mensajeError", "No hay suficiente stock para el producto ID: " + id);
