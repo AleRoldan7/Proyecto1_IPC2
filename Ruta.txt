@@ -1,0 +1,2 @@
+http://localhost:8080/Proyecto1_IPC2-1.0-SNAPSHOT/Frontend/index.jsp
+Ruta para ingresar al proyecto
