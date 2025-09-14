@@ -4,29 +4,26 @@
  */
 package EntidadModelo;
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
  *
  * @author alejandro
  */
 public class EntidadInstitucion {
     
-    private String nombreInstitucion;
+    private String nombre;
     private String descripcion;
 
-    public EntidadInstitucion(String nombreInstitucion) {
-        this.nombreInstitucion = nombreInstitucion;
+    public EntidadInstitucion(String nombre, String descripcion) {
+        this.nombre = nombre;
         this.descripcion = descripcion;
     }
 
-   
-    public String getNombreInstitucion() {
-        return nombreInstitucion;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreInstitucion(String nombreInstitucion) {
-        this.nombreInstitucion = nombreInstitucion;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getDescripcion() {
@@ -37,9 +34,5 @@ public class EntidadInstitucion {
         this.descripcion = descripcion;
     }
     
-    
-    public boolean valido(){
-        return StringUtils.isNotBlank(nombreInstitucion);
-    }
     
 }

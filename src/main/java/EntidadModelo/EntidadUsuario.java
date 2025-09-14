@@ -4,6 +4,7 @@
  */
 package EntidadModelo;
 
+import OpcionesENUM.RolAdmin;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -14,25 +15,31 @@ public class EntidadUsuario {
 
     private String nombre;
     private String correo;
-    private String identificador;
-    private String institucion;
+    private String identificacion;
     private String celular;
     private byte[] foto;
     private boolean estado;
-    private double saldo;
+    private double cuenta;
+    private String userName;
+    private String password;
+    private RolAdmin rol;
 
-    public EntidadUsuario(String nombre, String correo, String identificador, String institucion, String celular) {
+    public EntidadUsuario(String nombre, String correo, String identificacion, String celular, byte[] foto, boolean estado, double cuenta, 
+            String userName, String password, RolAdmin rol) {
         this.nombre = nombre;
         this.correo = correo;
-        this.identificador = identificador;
-        this.institucion = institucion;
+        this.identificacion = identificacion;
         this.celular = celular;
-        this.foto = null;
-        this.estado = true;
-        this.saldo = 0.0;
+        this.foto = foto;
+        this.estado = estado;
+        this.cuenta = cuenta;
+        this.userName = userName;
+        this.password = password;
+        this.rol = rol;
     }
 
     
+
     public String getNombre() {
         return nombre;
     }
@@ -49,20 +56,12 @@ public class EntidadUsuario {
         this.correo = correo;
     }
 
-    public String getIdentificador() {
-        return identificador;
+    public String getIdentificacion() {
+        return identificacion;
     }
 
-    public void setIdentificador(String identificador) {
-        this.identificador = identificador;
-    }
-
-    public String getInstitucion() {
-        return institucion;
-    }
-
-    public void setInstitucion(String institucion) {
-        this.institucion = institucion;
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
     }
 
     public String getCelular() {
@@ -89,17 +88,44 @@ public class EntidadUsuario {
         this.estado = estado;
     }
 
-    public double getSaldo() {
-        return saldo;
+    public double getCuenta() {
+        return cuenta;
     }
 
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
+    public void setCuenta(double cuenta) {
+        this.cuenta = cuenta;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public RolAdmin getRol() {
+        return rol;
+    }
+
+    public void setRol(RolAdmin rol) {
+        this.rol = rol;
+    }
+    
+    
+
+   
     public boolean esValido() {
        return StringUtils.isNotBlank(nombre)
-        && StringUtils.isNotBlank(identificador);
+        && StringUtils.isNotBlank(identificacion);
     }
 
 }

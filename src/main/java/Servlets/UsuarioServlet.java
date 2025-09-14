@@ -4,39 +4,40 @@
  */
 package Servlets;
 
-import ConexionDBA.InstitucionDB;
 import Controlador.CrearUsuarios;
-import EntidadModelo.EntidadInstitucion;
 import EntidadModelo.EntidadUsuario;
+import Excepciones.ConversionNotFound;
 import Excepciones.DatosInvalidos;
 import Excepciones.EntityExists;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author alejandro
  */
+@MultipartConfig
 @WebServlet(name = "UsuarioServlet", urlPatterns = {"/formularios/UsuarioServlet"})
 public class UsuarioServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        InstitucionDB institucionDB = new InstitucionDB();
-        List<String> instituciones = institucionDB.obtenerNombresInstituciones();
-        request.setAttribute("instituciones", instituciones);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/formularios/agregar-usuario.jsp");
-        dispatcher.forward(request, response);
+        
     }
 
     @Override
@@ -44,40 +45,31 @@ public class UsuarioServlet extends HttpServlet {
             throws ServletException, IOException {
 
         CrearUsuarios crearUsuarios = new CrearUsuarios();
-        String institucionSeleccionada = request.getParameter("institucionSeleccionada");
-        String nuevaInstitucionNombre = request.getParameter("nuevaInstitucion");
-        String nuevaInstitucionDescripcion = request.getParameter("descripcion");
 
-        try {
-            if ("nueva".equals(institucionSeleccionada) && nuevaInstitucionNombre != null && !nuevaInstitucionNombre.isEmpty()) {
-                EntidadInstitucion nuevaInst = new EntidadInstitucion(nuevaInstitucionNombre);
-                nuevaInst.setDescripcion(nuevaInstitucionDescripcion);
+        Part partFoto = request.getPart("foto");
 
-                if (nuevaInst.valido()) {
-                    InstitucionDB instDB = new InstitucionDB();
-                    instDB.agregarInstitucion(nuevaInst);
+        if (partFoto != null && partFoto.getSize() > 0) {
 
-                    request.setAttribute("institucionUsuario", nuevaInstitucionNombre);
-                }
-            } else {
-                request.setAttribute("institucionUsuario", institucionSeleccionada);
-            }
+            String nombreFoto = System.getProperty("java.io.tmpdir") + "/" + partFoto.getSubmittedFileName();
+            File fototmp = new File(nombreFoto);
+            partFoto.write(nombreFoto);
 
-            EntidadUsuario usuarioCreado = crearUsuarios.crearUsuario(request);
-
-            request.setAttribute("usuarioCreado", usuarioCreado);
-
-        } catch (DatosInvalidos | EntityExists e) {
-            request.setAttribute("error", e.getMessage());
+            request.setAttribute("fototmp", fototmp);
         }
 
-        InstitucionDB instDB = new InstitucionDB();
-        request.setAttribute("instituciones", instDB.obtenerNombresInstituciones());
+        try {
 
-        RequestDispatcher dispatcher = getServletContext()
-                .getRequestDispatcher("/formularios/agregar-usuario.jsp");
+            EntidadUsuario usuarioCreado = crearUsuarios.crearUsuario(request);
+            request.setAttribute("usuarioCreado", usuarioCreado);
+
+        } catch (EntityExists | DatosInvalidos | FileNotFoundException | ConversionNotFound e) {
+            request.setAttribute("error", e.getMessage());
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/formularios/agregar-usuario.jsp");
         dispatcher.forward(request, response);
-
     }
 
 }

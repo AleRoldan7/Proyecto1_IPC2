@@ -14,7 +14,7 @@ import java.sql.SQLException;
  */
 public class Conexion {
 
-     private static final String IP = "localhost";
+    private static final String IP = "localhost";
     private static final int PUERTO = 3306;
     private static final String SCHEMA = "CodeBugs";
     private static final String USER = "root";
@@ -30,7 +30,7 @@ public class Conexion {
 
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
             System.out.println("✅Conexión establecida con la base: " + SCHEMA);
-            
+
         } catch (ClassNotFoundException e) {
             System.out.println("❌No se encontró el driver de MySQL");
             e.printStackTrace();
@@ -40,14 +40,29 @@ public class Conexion {
         }
     }
 
+    
     public Connection getConnect() {
         return connection;
     }
     
-    public static Conexion getInstance(){
-         if (instance == null) {
+    public static Conexion getInstance() {
+        if (instance == null) {
             instance = new Conexion();
         }
         return instance;
     }
+    
+     public void closeConnection() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+                connection = null;
+                instance = null;
+                System.out.println("Conexión cerrada correctamente");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }
