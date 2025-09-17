@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controlador;
+package Controlador.Congreso;
 
 import ConexionDBA.CongresoDB;
 import EntidadModelo.EntidadCongreso;
@@ -20,7 +20,7 @@ import java.util.Locale;
  */
 public class CrearCongreso {
 
-    private  DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.getDefault());
 
     public EntidadCongreso crearCongreso(HttpServletRequest request) throws EntityExists, DatosInvalidos {
         CongresoDB congresoDB = new CongresoDB();
@@ -47,10 +47,9 @@ public class CrearCongreso {
                     LocalDate.parse(request.getParameter("fecha_inicio"), formato),
                     Double.parseDouble(request.getParameter("precio")),
                     request.getParameter("ubicacion"),
-                    Integer.parseInt(request.getParameter("id_institucion")),
+                    Integer.parseInt(request.getParameter("institucion")),
                     LocalDate.parse(request.getParameter("fecha_apertura_conv"), formato),
                     LocalDate.parse(request.getParameter("fecha_cierre_conv"), formato)
-                   
             );
 
             if (!entidadCongreso.esValido()) {

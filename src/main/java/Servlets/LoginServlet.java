@@ -57,11 +57,10 @@ public class LoginServlet extends HttpServlet {
 
         String passwordEncriptado = Base64.getEncoder().encodeToString(password.getBytes());
 
-        System.out.println("Datos recibidos del formulario:");
         System.out.println("Usuario: " + usuario);
         System.out.println("Password: " + password);
         System.out.println("Rol: " + rol);
-        System.out.println("Password en Base64: " + passwordEncriptado);
+        System.out.println("Password encriptado: " + passwordEncriptado);
 
         UsuarioDB usuarioDB = new UsuarioDB();
 
@@ -98,7 +97,7 @@ public class LoginServlet extends HttpServlet {
 
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("error", "Error al procesar el login: " + e.getMessage());
+            request.setAttribute("error", "Error en el login: " + e.getMessage());
             request.getRequestDispatcher("/inicio/index.jsp").forward(request, response);
         }
     }

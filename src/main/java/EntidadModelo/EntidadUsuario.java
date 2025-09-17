@@ -23,6 +23,7 @@ public class EntidadUsuario {
     private String userName;
     private String password;
     private RolAdmin rol;
+    private int idInstitucion;
 
     public EntidadUsuario(String nombre, String correo, String identificacion, String celular, byte[] foto, boolean estado, double cuenta, 
             String userName, String password, RolAdmin rol) {
@@ -36,6 +37,21 @@ public class EntidadUsuario {
         this.userName = userName;
         this.password = password;
         this.rol = rol;
+    }
+
+    public EntidadUsuario(String nombre, String correo, String identificacion, String celular, byte[] foto, boolean estado, double cuenta, 
+            String userName, String password, RolAdmin rol, int idInstitucion) {
+        this.nombre = nombre;
+        this.correo = correo;
+        this.identificacion = identificacion;
+        this.celular = celular;
+        this.foto = foto;
+        this.estado = estado;
+        this.cuenta = cuenta;
+        this.userName = userName;
+        this.password = password;
+        this.rol = rol;
+        this.idInstitucion = idInstitucion;
     }
 
     
@@ -119,9 +135,15 @@ public class EntidadUsuario {
     public void setRol(RolAdmin rol) {
         this.rol = rol;
     }
-    
-    
 
+    public int getIdInstitucion() {
+        return idInstitucion;
+    }
+
+    public void setIdInstitucion(int idInstitucion) {
+        this.idInstitucion = idInstitucion;
+    }
+    
    
     public boolean esValido() {
        return StringUtils.isNotBlank(nombre)

@@ -18,7 +18,7 @@ import java.sql.SQLException;
 public class UsuarioDB {
 
     private static final String CREAR_USUARIO_QUERY = "INSERT INTO usuario (nombre_completo, correo, identificacion, no_celular,"
-            + "foto, estado_usuario, cuenta_usuario, user_name, password, rol_usuario) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            + "foto, estado_usuario, cuenta_usuario, user_name, password, rol_usuario, id_institucion) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
     private static final String ENCONTRAR_USUARIO_QUERY = "SELECT * FROM usuario WHERE identificacion = ?";
     private static final String VERIFICAR_USUARIO_QUERY = "SELECT * FROM usuario WHERE user_name = ? AND password = ? AND rol_usuario = ?";
@@ -37,8 +37,9 @@ public class UsuarioDB {
             insert.setString(8, usuario.getUserName());
             insert.setString(9, usuario.getPassword());
             insert.setString(10, usuario.getRol().name());
+            insert.setInt(11, usuario.getIdInstitucion());
             insert.executeUpdate();
-
+            System.out.println("datos" + insert);
         } catch (SQLException e) {
             e.printStackTrace();
         }

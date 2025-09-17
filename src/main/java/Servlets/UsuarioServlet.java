@@ -4,11 +4,14 @@
  */
 package Servlets;
 
-import Controlador.CrearUsuarios;
+import ConexionDBA.InstitucionDB;
+import Controlador.Usuario.CrearUsuarios;
+import EntidadModelo.EntidadInstitucion;
 import EntidadModelo.EntidadUsuario;
 import Excepciones.ConversionNotFound;
 import Excepciones.DatosInvalidos;
 import Excepciones.EntityExists;
+import Validaciones.ValidacionUsuario;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -20,6 +23,7 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
@@ -38,29 +42,48 @@ public class UsuarioServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        InstitucionDB idb = new InstitucionDB();
+        List<EntidadInstitucion> instituciones = idb.listarInstituciones();
+        request.setAttribute("instituciones", instituciones);
+
+        RequestDispatcher dispatcher = getServletContext()
+                .getRequestDispatcher("/formularios/agregar-usuario.jsp");
+        dispatcher.forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        CrearUsuarios crearUsuarios = new CrearUsuarios();
+        ValidacionUsuario validar = new ValidacionUsuario();
+        String error = validar.validarFormularioUsuario(request);
 
-        Part partFoto = request.getPart("foto");
-
-        if (partFoto != null && partFoto.getSize() > 0) {
-
-            String nombreFoto = System.getProperty("java.io.tmpdir") + "/" + partFoto.getSubmittedFileName();
-            File fototmp = new File(nombreFoto);
-            partFoto.write(nombreFoto);
-
-            request.setAttribute("fototmp", fototmp);
+        InstitucionDB idb = new InstitucionDB();
+        List<EntidadInstitucion> instituciones = idb.listarInstituciones();
+        request.setAttribute("instituciones", instituciones);
+        
+        if (error != null) {
+            request.setAttribute("error", error);
+            RequestDispatcher dispatcher = getServletContext()
+                    .getRequestDispatcher("/formularios/agregar-usuario.jsp");
+            dispatcher.forward(request, response);
+            return;
         }
 
         try {
 
-            EntidadUsuario usuarioCreado = crearUsuarios.crearUsuario(request);
-            request.setAttribute("usuarioCreado", usuarioCreado);
+            CrearUsuarios crearUsuarios = new CrearUsuarios();
+
+            byte[] fotoBytes = null;
+            Part partFoto = request.getPart("foto");
+            if (partFoto != null && partFoto.getSize() > 0) {
+                try (InputStream is = partFoto.getInputStream()) {
+                    fotoBytes = is.readAllBytes();
+                }
+            }
+
+            EntidadUsuario usuarioCreado = crearUsuarios.crearUsuario(request, fotoBytes);
+            request.setAttribute("usuarioCreado", "Usuario Creado  ' " + usuarioCreado.getNombre() + "' correctamente");
 
         } catch (EntityExists | DatosInvalidos | FileNotFoundException | ConversionNotFound e) {
             request.setAttribute("error", e.getMessage());

@@ -10,6 +10,9 @@ package OpcionesENUM;
  */
 public enum RolAdmin {
     
-    Admin_General, Admin_Institucion, Participante, Comite_Cientifico;
+    Admin_General, 
+    Admin_Institucion, 
+    Participante, 
+    Comite_Cientifico;
     
 }

@@ -5,7 +5,9 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="ConexionDBA.CongresoDB, java.sql.Connection, java.sql.PreparedStatement, java.sql.ResultSet"%>
+<%@ page import="java.util.List" %>
+<%@ page import="EntidadModelo.EntidadInstitucion" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,11 +26,17 @@
                         </div>
                         <div class="card-body">
 
-                            <% if (request.getAttribute("error") != null) { %>
-                            <div class="alert alert-danger text-center">
-                                <%= request.getAttribute("error") %>
-                            </div>
-                            <% } %>
+                            <c:if test="${not empty mensajeExito}">
+                                <div class="alert alert-success text-center">
+                                    ${mensajeExito}
+                                </div>
+                            </c:if>
+
+                            <c:if test="${not empty error}">
+                                <div class="alert alert-danger text-center">
+                                    ${error}
+                                </div>
+                            </c:if>
 
                             <form action="<%=request.getContextPath()%>/congreso/CongresoServlet" method="POST">
                                 <div class="mb-3">
@@ -56,7 +64,38 @@
                                     <input type="text" class="form-control" id="ubicacion" name="ubicacion" required>
                                 </div>
 
-                                
+                                <div class="mb-3">
+                                    <label for="id_institucion" class="form-label">Institución</label>
+                                    <select name="institucion" required>
+                                        <option value="">Seleccione una institución</option>
+                                        <%
+                                            List<EntidadInstitucion> instituciones = 
+                                                (List<EntidadInstitucion>) request.getAttribute("instituciones");
+                                            if (instituciones != null) {
+                                                for (EntidadInstitucion inst : instituciones) {
+                                        %>
+                                        <option value="<%= inst.getId_institucion() %>">
+                                            <%= inst.getNombre() %>
+                                        </option>
+                                        <%
+                                                }
+                                            }
+                                        %>
+                                    </select>
+
+                                </div>
+                                    
+                                <div class="mb-3">
+                                    <label for="fecha_apertura_conv" class="form-label">Fecha Apertura Convocatoria</label>
+                                    <input type="date" class="form-control" id="fecha_apertura_conv" name="fecha_apertura_conv" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="fecha_cierre_conv" class="form-label">Fecha Cierre Convocatoria</label>
+                                    <input type="date" class="form-control" id="fecha_cierre_conv" name="fecha_cierre_conv" required>
+                                </div>
+
+
 
                                 <div class="d-grid gap-2 mt-3">
                                     <button type="submit" class="btn btn-success">Registrar Congreso</button>

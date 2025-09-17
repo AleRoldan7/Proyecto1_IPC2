@@ -13,27 +13,43 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class EntidadCongreso {
     
+    private int idCongreso;
     private String nombre;
     private String descripcion;
     private LocalDate fechaInicio;
     private double precioCongreso;
     private String ubicacion;
-    private int id_institucion;
+    private int idInstitucion;
     private LocalDate fechaInicioConvocatoria;
     private LocalDate fechaCierreConvocatoria;
 
-    public EntidadCongreso(String nombre, String descripcion, LocalDate fechaInicio, double precioCongreso, String ubicacion, 
+    public EntidadCongreso(int idCongreso, String nombre, String descripcion, LocalDate fechaInicio, double precioCongreso, String ubicacion, 
             int id_institucion, LocalDate fechaInicioConvocatoria, LocalDate fechaCierreConvocatoria) {
+        this.idCongreso = idCongreso;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
         this.precioCongreso = precioCongreso;
         this.ubicacion = ubicacion;
-        this.id_institucion = id_institucion;
+        this.idInstitucion = id_institucion;
         this.fechaInicioConvocatoria = fechaInicioConvocatoria;
         this.fechaCierreConvocatoria = fechaCierreConvocatoria;
     }
 
+    public EntidadCongreso(String nombre, String descripcion, LocalDate fechaInicio, double precioCongreso, 
+            String ubicacion, int idInstitucion, LocalDate fechaInicioConvocatoria, LocalDate fechaCierreConvocatoria) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.fechaInicio = fechaInicio;
+        this.precioCongreso = precioCongreso;
+        this.ubicacion = ubicacion;
+        this.idInstitucion = idInstitucion;
+        this.fechaInicioConvocatoria = fechaInicioConvocatoria;
+        this.fechaCierreConvocatoria = fechaCierreConvocatoria;
+    }
+
+    
+    
     public String getNombre() {
         return nombre;
     }
@@ -75,11 +91,11 @@ public class EntidadCongreso {
     }
 
     public int getId_institucion() {
-        return id_institucion;
+        return idInstitucion;
     }
 
     public void setId_institucion(int id_institucion) {
-        this.id_institucion = id_institucion;
+        this.idInstitucion = id_institucion;
     }
 
     public LocalDate getFechaInicioConvocatoria() {

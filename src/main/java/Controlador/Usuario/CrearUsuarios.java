@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controlador;
+package Controlador.Usuario;
 
 import ConexionDBA.UsuarioDB;
 import EntidadModelo.EntidadUsuario;
@@ -23,10 +23,11 @@ import java.util.Base64;
  */
 public class CrearUsuarios {
 
-    public EntidadUsuario crearUsuario(HttpServletRequest request) throws EntityExists, DatosInvalidos, ConversionNotFound, FileNotFoundException, SQLException {
+    public EntidadUsuario crearUsuario(HttpServletRequest request, byte[] fotoBytes)
+            throws EntityExists, DatosInvalidos, ConversionNotFound, FileNotFoundException, SQLException {
         UsuarioDB usuarioDB = new UsuarioDB();
 
-        EntidadUsuario entidadUsuario = extraer(request);
+        EntidadUsuario entidadUsuario = extraer(request, fotoBytes);
 
         if (usuarioDB.existeUsuario(entidadUsuario.getIdentificacion())) {
             throw new EntityExists(
@@ -39,34 +40,27 @@ public class CrearUsuarios {
         return entidadUsuario;
     }
 
-    private EntidadUsuario extraer(HttpServletRequest request) throws DatosInvalidos, ConversionNotFound, FileNotFoundException {
+    private EntidadUsuario extraer(HttpServletRequest request, byte[] fotoBytes)
+            throws DatosInvalidos, ConversionNotFound, FileNotFoundException {
 
         RolAdmin rol = RolAdmin.valueOf(request.getParameter("rol_usuario"));
 
-        byte[] foto = null;
-        String fotoDireccion =  request.getParameter("foto");
-        
-        if (fotoDireccion  != null && !fotoDireccion .isEmpty()) {
-            File fotoFile = new File(fotoDireccion );
-            ConvertirFoto convertir = new ConvertirFoto();
-            foto = convertir.convertirFoto(fotoFile);
-        }
-        
-        String password =  request.getParameter("password");
+        String password = request.getParameter("password");
         String passEncriptado = Base64.getEncoder().encodeToString(password.getBytes());
-        
+
         try {
             EntidadUsuario entidadUsuario = new EntidadUsuario(
                     request.getParameter("nombre_completo"),
                     request.getParameter("correo"),
                     request.getParameter("identificacion"),
                     request.getParameter("no_celular"),
-                    foto,
+                    fotoBytes,
                     true,
                     0.0,
                     request.getParameter("user_name"),
                     passEncriptado,
-                    rol
+                    rol,
+                    Integer.parseInt(request.getParameter("institucion"))
             );
 
             if (!entidadUsuario.esValido()) {

@@ -33,17 +33,19 @@
                             <form action="<%=request.getContextPath()%>/LoginServlet" method="POST">
                                 <div class="mb-3">
                                     <label for="usuario" class="form-label">Usuario</label>
-                                    <input type="text" class="form-control" id="usuario" name="user_name" required>
+                                    <input type="text" class="form-control" id="usuario" name="user_name" required
+                                           title="Lllene el campo de usuario">
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Contraseña</label>
-                                    <input type="password" class="form-control" id="password" name="password" required>
+                                    <input type="password" class="form-control" id="password" name="password" required
+                                           title="Complete este campo">
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="rol" class="form-label">Rol</label>
-                                    <select class="form-select" id="rol" name="rol_usuario" required>
+                                    <select class="form-select" id="rol" name="rol_usuario" required title="Seleccione una opcion">
                                         <option value="" disabled selected>Seleccione un rol</option>
                                         <option value="Admin_General">Administrador General</option>
                                         <option value="Admin_Institucion">Administrador Institución</option>
@@ -54,7 +56,7 @@
 
                                 <div class="d-grid gap-2 mt-3">
                                     <button type="submit" class="btn btn-primary">Ingresar</button>
-                                    <a href="<%=request.getContextPath()%>/formularios/agregar-usuario.jsp" class="btn btn-success">Registrarse</a>
+                                    <a href="<%=request.getContextPath()%>/formularios/UsuarioServlet" class="btn btn-success">Registrarse</a>
                                 </div>
                             </form>
 

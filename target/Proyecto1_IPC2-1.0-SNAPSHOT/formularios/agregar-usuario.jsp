@@ -6,6 +6,9 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="EntidadModelo.EntidadUsuario"%>
+<%@ page import="java.util.List" %>
+<%@ page import="EntidadModelo.EntidadInstitucion" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,17 +26,17 @@
                 </div>
                 <div class="card-body">
 
-                    <% if (request.getAttribute("mensaje") != null) { %>
-                    <div class="alert alert-success">
-                        <%= request.getAttribute("mensaje") %>
-                    </div>
-                    <% } %>
+                    <c:if test="${not empty usuarioCreado}">
+                        <div class="alert alert-success text-center">
+                            ${usuarioCreado}
+                        </div>
+                    </c:if>
 
-                    <% if (request.getAttribute("error") != null) { %>
-                    <div class="alert alert-danger">
-                        <%= request.getAttribute("error") %>
-                    </div>
-                    <% } %>
+                    <c:if test="${not empty error}">
+                        <div class="alert alert-danger text-center">
+                            ${error}
+                        </div>
+                    </c:if>
 
                     <form action="${pageContext.request.contextPath}/formularios/UsuarioServlet" method="POST" enctype="multipart/form-data">
 
@@ -74,6 +77,28 @@
                                 <input type="file" class="form-control mb-2" name="foto" accept="image/*">
                             </div>
                         </fieldset>
+
+                        <div class="mb-3">
+                            <label for="id_institucion" class="form-label">Institución</label>
+                            <select name="institucion" required>
+                                <option value="">Seleccione una institución</option>
+                                <%
+                                    List<EntidadInstitucion> instituciones = 
+                                        (List<EntidadInstitucion>) request.getAttribute("instituciones");
+                                    if (instituciones != null) {
+                                        for (EntidadInstitucion inst : instituciones) {
+                                %>
+                                <option value="<%= inst.getId_institucion() %>">
+                                    <%= inst.getNombre() %>
+                                </option>
+                                <%
+                                        }
+                                    }
+                                %>
+                            </select>
+
+                        </div>
+
 
                         <fieldset class="border p-3 mb-3" id="cuentaFieldset" style="display:none;">
 

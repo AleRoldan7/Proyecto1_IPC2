@@ -17,16 +17,19 @@
         <div class="collapse navbar-collapse" id="navbarMenu">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="<%=request.getContextPath()%>/formularios/agregar-congreso.jsp">Agregar Congreso</a>
+                    <a class="nav-link" href="<%=request.getContextPath()%>/congreso/CongresoServlet">Agregar Congreso</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Gestionar Congresos</a>
+                    <a class="nav-link" href="<%=request.getContextPath()%>/institucion/InstitucionServlet">Agregar Institucion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<%=request.getContextPath()%>/congreso/CongresoServlet?accion=listar">Gestionar Congresos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Usuarios</a>
                 </li>
             </ul>
-           
+
             <a class="btn btn-outline-light" href="<%=request.getContextPath()%>/LoginServlet?logout=true">Cerrar Sesión</a>
         </div>
     </div>
