@@ -29,13 +29,13 @@ public class Conexion {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("✅Conexión establecida con la base: " + SCHEMA);
+            System.out.println("Se conceto a la base " + SCHEMA);
 
         } catch (ClassNotFoundException e) {
-            System.out.println("❌No se encontró el driver de MySQL");
+            System.out.println("Sin driver de MYSQL");
             e.printStackTrace();
         } catch (SQLException e) {
-            System.out.println("❌Error al conectarse a la base");
+            System.out.println("No se conecto a la base " + SCHEMA);
             e.printStackTrace();
         }
     }
